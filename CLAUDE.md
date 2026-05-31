@@ -26,14 +26,14 @@ App
 ```
 
 **State ownership:**
-- `App` — holds the `transactions` array (`{ id, description, amount, type, category, date }`). `amount` is always a number. Seed data lives in the module-level `initialTransactions` constant. Passes `transactions` down and provides `handleAdd` to `TransactionForm`.
+- `App` — holds the `transactions` array (`{ id, description, amount, type, category, date }`). `amount` is always a number. Seed data lives in the module-level `initialTransactions` constant. Provides `handleAdd` and `handleDelete` callbacks to children.
 - `TransactionForm` — owns `description`, `amount`, `type`, `category` locally. Builds the transaction object and calls `onAdd`; resets its own fields after submission.
-- `TransactionList` — owns `filterType` and `filterCategory` locally. Filters the received `transactions` array inline before rendering.
+- `TransactionList` — owns `filterType` and `filterCategory` locally. Filters the received `transactions` array inline before rendering. Each row has a Delete button that shows a `window.confirm` dialog before calling `onDelete(id)`.
 - `Summary` — stateless; derives `totalIncome`, `totalExpenses`, and `balance` from the `transactions` prop.
 
 Both `TransactionForm` and `TransactionList` define their own local `categories` constant — it is a static list, not shared state.
 
-**Styling**: plain CSS in `src/App.css` (component styles) and `src/index.css` (global reset). No CSS framework or CSS modules. The `.delete-btn` class is defined in `App.css` but not yet wired to any button in the JSX.
+**Styling**: plain CSS in `src/App.css` (component styles) and `src/index.css` (global reset). No CSS framework or CSS modules. `.delete-btn` is the style used by the delete buttons in `TransactionList`.
 
 **No persistence** — state resets on page reload.
 
